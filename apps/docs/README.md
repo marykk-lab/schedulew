@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# Schedule App
+
+> **Stack:** Next.js 15 · TypeScript · React · Turborepo monorepo
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# From the repo root
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App runs at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+## Planned File Structure
 
-## Learn More
+```
+apps/web/                          ← main application
+├── app/
+│   ├── layout.tsx                 # HTML shell, global styles
+│   ├── page.tsx                   # Root page — composes layout
+│   └── globals.css
+│
+├── components/
+│   ├── Header.tsx                 # Title, Save / Clear buttons
+│   │
+│   ├── Sidebar/
+│   │   ├── Sidebar.tsx            # Left panel wrapper
+│   │   ├── ActivityForm.tsx       # Add activity (name, duration, color)
+│   │   ├── ActivityList.tsx       # Stacked list of created activities
+│   │   └── DraggableActivity.tsx  # Single draggable activity card
+│   │
+│   └── Timetable/
+│       ├── Timetable.tsx          # Main grid container
+│       ├── TimeColumn.tsx         # Left axis — hour labels (8:00, 9:00 …)
+│       ├── DayColumn.tsx          # Day columns (Mon, Tue …)
+│       └── TimeSlot.tsx           # One grid cell — drop target
+│
+├── hooks/
+│   ├── useSchedule.ts             # CRUD for placed activities
+│   └── useDragDrop.ts             # Drag state helpers
+│
+├── store/
+│   └── scheduleStore.ts           # Global state (Zustand) — activities + grid
+│
+├── data/
+│   └── mockData.ts # Test data
+├── types/
+│   └── index.ts                   # Activity, TimeSlotEntry, Day, etc.
+│
+├── theme/
+│   └── theme.ts # Color palette(theme)
+│
+└── lib/
+    └── utils.ts                   # Time formatting, color helpers
 
-To learn more about Next.js, take a look at the following resources:
+apps/docs/                         ← documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+packages/
+├── ui/                            # Shared component primitives
+├── eslint-config/                 # Shared ESLint rules
+└── typescript-config/             # Shared tsconfig presets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Component Tree
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/layout.tsx
+└── app/page.tsx
+    ├── Header.tsx
+    ├── Sidebar/
+    │   ├── Sidebar.tsx
+    │   ├── ActivityForm.tsx 
+    │   └── ActivityList.tsx
+    │       └── DraggableActivity.tsx
+    └── Timetable/
+        ├── Timetable.tsx
+        ├── TimeColumn.tsx
+        └── DayColumn.tsx
+            └── TimeSlot.tsx
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## State Flow
+
+```
+ActivityForm
+    │  creates Activity
+    ▼
+scheduleStore ──► ActivityList (reads activities)
+    │                  │
+    │                  └──► DraggableActivity (drag source)
+    │
+    └──► Timetable ──► TimeSlot (drop target)
+              writes placed entry back to store
+```
