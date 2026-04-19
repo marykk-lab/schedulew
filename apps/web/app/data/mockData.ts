@@ -27,15 +27,15 @@ export const mockScheduleData: ScheduleData = {
   scheduledItems: [
     {
       id: "1",
-      activityId: "act-1",
-      day: "Monday",
+      activityId: "1",
+      date: "2026-04-20",
       startTime: "08:00",
       endTime: "08:45"
     },
     {
       id: "2",
       activityId: "2",
-      day: "Tuesday",
+      date: "2026-04-21",
       startTime: "10:00",
       endTime: "11:30"
     }

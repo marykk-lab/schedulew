@@ -18,10 +18,6 @@ export function useSchedule(): ScheduleState {
     setActivities(prev => [...prev, { ...activity, id: generateId() }]);
   }
 
-  function updateActivity(id: string, updates: Partial<Omit<Activity, 'id'>>) {
-    setActivities(prev => prev.map(a => (a.id === id ? { ...a, ...updates } : a)));
-  }
-
   function deleteActivity(id: string) {
     setActivities(prev => prev.filter(a => a.id !== id));
     setScheduledItems(prev => prev.filter(s => s.activityId !== id));
@@ -32,10 +28,6 @@ export function useSchedule(): ScheduleState {
     setScheduledItems(prev => [...prev, { ...item, id: generateId() }]);
   }
 
-  function updateScheduledItem(id: string, updates: Partial<Omit<ScheduledItem, 'id'>>) {
-    setScheduledItems(prev => prev.map(s => (s.id === id ? { ...s, ...updates } : s)));
-  }
-
   function deleteScheduledItem(id: string) {
     setScheduledItems(prev => prev.filter(s => s.id !== id));
   }
@@ -44,10 +36,8 @@ export function useSchedule(): ScheduleState {
     activities,
     scheduledItems,
     addActivity,
-    updateActivity,
     deleteActivity,
     addScheduledItem,
-    updateScheduledItem,
     deleteScheduledItem,
   };
 }

@@ -12,7 +12,7 @@ export interface Activity {
 export interface ScheduledItem {
   id: string;
   activityId: string;
-  day: DayOfWeek;
+  date: string; // ISO date 'YYYY-MM-DD'
   startTime: string;
   endTime: string;
 }

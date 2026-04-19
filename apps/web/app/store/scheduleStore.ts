@@ -7,10 +7,8 @@ export interface ScheduleState {
   activities: Activity[];
   scheduledItems: ScheduledItem[];
   addActivity: (activity: Omit<Activity, 'id'>) => void;
-  updateActivity: (id: string, updates: Partial<Omit<Activity, 'id'>>) => void;
   deleteActivity: (id: string) => void;
   addScheduledItem: (item: Omit<ScheduledItem, 'id'>) => void;
-  updateScheduledItem: (id: string, updates: Partial<Omit<ScheduledItem, 'id'>>) => void;
   deleteScheduledItem: (id: string) => void;
 }
 

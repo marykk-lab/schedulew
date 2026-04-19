@@ -1,7 +1,9 @@
+import React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ScheduleProvider } from "./components/ScheduleProvider";
+import { ViewProvider } from "./components/ViewProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ScheduleProvider>{children}</ScheduleProvider>
+        <ScheduleProvider><ViewProvider>{children}</ViewProvider></ScheduleProvider>
       </body>
     </html>
   );
