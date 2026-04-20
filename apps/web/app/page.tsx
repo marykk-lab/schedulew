@@ -39,7 +39,7 @@ function ScheduleApp() {
   }
 
   return (
-    <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+    <DndContext id="schedulew-dnd" sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <div className="flex flex-col h-dvh bg-bg md:h-screen md:p-3 md:gap-3">
         <Header onMenuClick={() => setSidebarOpen(true)} />
         <div className="flex flex-1 overflow-hidden md:rounded-xl md:border md:border-border relative">
