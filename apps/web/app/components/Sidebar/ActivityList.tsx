@@ -8,26 +8,19 @@ export function ActivityList() {
   const { activities, deleteActivity } = useScheduleContext();
 
   if (activities.length === 0) {
-    return <p style={{ fontSize: 13, color: '#9ca3af', margin: 0 }}>No activities yet.</p>;
+    return <p className="text-[13px] text-text-disabled m-0">No activities yet.</p>;
   }
 
   return (
-    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <ul className="list-none p-0 m-0 flex flex-col gap-1.5">
       {activities.map(a => (
-        <li key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <div style={{ flex: 1 }}>
+        <li key={a.id} className="flex items-center gap-1">
+          <div className="flex-1">
             <DraggableActivity activity={a} />
           </div>
           <button
             onClick={() => deleteActivity(a.id)}
-            style={{
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: '#9ca3af',
-              fontSize: 14,
-              padding: '4px 6px',
-            }}
+            className="border-0 bg-transparent cursor-pointer text-text-disabled text-sm px-1.5 py-1 hover:text-error transition-colors duration-150"
             title="Remove activity"
           >
             ✕

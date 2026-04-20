@@ -4,10 +4,10 @@ import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { Activity, ScheduledItem } from '../../types/types';
 
-export const SLOT_HEIGHT = 32;
+export const SLOT_HEIGHT = 36;
 
 interface Props {
-  slotId: string; 
+  slotId: string;
   scheduledItem?: ScheduledItem;
   activity?: Activity;
   slotSpan?: number;
@@ -18,62 +18,31 @@ export function TimeSlot({ slotId, scheduledItem, activity, slotSpan = 1, onRemo
   const isOccupied = !!scheduledItem && !!activity;
   const { setNodeRef, isOver } = useDroppable({ id: slotId, disabled: isOccupied });
 
-  const baseStyle: React.CSSProperties = {
-    height: SLOT_HEIGHT,
-    borderBottom: '1px solid #f3f4f6',
-    position: 'relative',
-    background: isOver && !isOccupied ? '#eff6ff' : 'transparent',
-    transition: 'background 0.1s',
-  };
-
-  if (isOccupied) {
-    return (
-      <div ref={setNodeRef} style={baseStyle}>
+  return (
+    <div
+      ref={setNodeRef}
+      className={`border-b border-border relative transition-colors duration-100 ${isOver && !isOccupied ? 'bg-tint' : ''}`}
+      style={{ height: SLOT_HEIGHT }}
+    >
+      {isOccupied && (
         <div
+          className="absolute top-0.5 left-0.5 right-0.5 rounded overflow-hidden flex items-center justify-between px-1.5 text-[11px] font-semibold text-black z-10"
           style={{
-            position: 'absolute',
-            top: 2,
-            left: 2,
-            right: 2,
             height: SLOT_HEIGHT * slotSpan - 4,
             background: activity.color,
-            borderRadius: 4,
-            padding: '2px 6px',
-            fontSize: 11,
-            color: '#000000',
-            fontWeight: 600,
-            overflow: 'hidden',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            zIndex: 1,
           }}
         >
-          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {activity.name}
-          </span>
+          <span className="truncate">{activity.name}</span>
           {onRemove && (
             <button
               onClick={onRemove}
-              style={{
-                border: 'none',
-                background: 'rgba(255,255,255,0.3)',
-                color: '#fff',
-                cursor: 'pointer',
-                borderRadius: 3,
-                fontSize: 10,
-                padding: '1px 4px',
-                flexShrink: 0,
-                marginLeft: 4,
-              }}
+              className="border-0 bg-white/30 text-white cursor-pointer rounded-sm text-[10px] px-1 shrink-0 ml-1"
             >
               ✕
             </button>
           )}
         </div>
-      </div>
-    );
-  }
-
-  return <div ref={setNodeRef} style={baseStyle} />;
+      )}
+    </div>
+  );
 }

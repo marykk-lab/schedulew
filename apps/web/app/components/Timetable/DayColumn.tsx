@@ -44,34 +44,10 @@ export function DayColumn({ day, date }: Props) {
   })();
 
   return (
-    <div style={{ flex: 1, minWidth: 100, borderRight: '1px solid #e5e7eb' }}>
-      <div
-        style={{
-          height: 36,
-          borderBottom: '1px solid #e5e7eb',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 5,
-          fontSize: 12,
-          fontWeight: 600,
-          color: isToday ? '#2563eb' : '#374151',
-        }}
-      >
+    <div className="flex-1 min-w-25 border-r border-border">
+      <div className={`h-9 border-b border-border flex items-center justify-center gap-1 text-[12px] font-semibold ${isToday ? 'text-accent' : 'text-text-secondary'}`}>
         <span>{day.slice(0, 3)}</span>
-        <span
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: '50%',
-            background: isToday ? '#2563eb' : 'transparent',
-            color: isToday ? '#fff' : '#6b7280',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 11,
-          }}
-        >
+        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] ${isToday ? 'bg-accent text-text-on-accent' : 'text-text-disabled'}`}>
           {date.getDate()}
         </span>
       </div>
