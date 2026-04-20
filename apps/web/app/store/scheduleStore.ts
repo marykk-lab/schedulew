@@ -10,6 +10,8 @@ export interface ScheduleState {
   deleteActivity: (id: string) => void;
   addScheduledItem: (item: Omit<ScheduledItem, 'id'>) => void;
   deleteScheduledItem: (id: string) => void;
+  exportData: () => void;
+  importData: (json: string) => void;
 }
 
 export const ScheduleContext = createContext<ScheduleState | null>(null);

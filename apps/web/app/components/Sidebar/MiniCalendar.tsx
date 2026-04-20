@@ -24,7 +24,7 @@ export function MiniCalendar() {
       : {};
 
   const modifiersStyles = {
-    weekRange: { background: '#eff6ff', borderRadius: 0 } as React.CSSProperties,
+    weekRange: { background: 'rgba(168, 151, 122, 0.15)', borderRadius: 0 } as React.CSSProperties,
   };
 
   return (
@@ -40,10 +40,11 @@ export function MiniCalendar() {
       />
       <style>{`
         .mini-calendar .rdp-root {
-          --rdp-accent-color: #2563eb;
-          --rdp-accent-background-color: #eff6ff;
+          --rdp-accent-color: #a8977a;
+          --rdp-accent-background-color: rgba(168, 151, 122, 0.15);
           font-size: 12px;
           width: 100%;
+          color: #f0e8d6;
         }
         .mini-calendar .rdp-month_grid {
           width: 100%;
@@ -55,19 +56,19 @@ export function MiniCalendar() {
         }
         .mini-calendar .rdp-weekday {
           font-size: 10px;
-          color: #9ca3af;
+          color: #5e5548;
           font-weight: 600;
         }
         .mini-calendar .rdp-caption_label {
           font-size: 13px;
           font-weight: 700;
-          color: #111827;
+          color: #f0e8d6;
         }
         .mini-calendar .rdp-nav button {
-          color: #6b7280;
+          color: #8a7f6a;
         }
         .mini-calendar .rdp-outside {
-          color: #d1d5db;
+          color: #5e5548;
         }
       `}</style>
     </div>

@@ -3,6 +3,7 @@
 import React from 'react';
 import { useViewContext } from '../../store/viewStore';
 import { useScheduleContext } from '../../store/scheduleStore';
+
 const DAY_HEADERS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 
 function isSameDay(a: Date, b: Date) {
@@ -37,26 +38,21 @@ export function MonthView() {
   }
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'auto', color: '#111827' }}>
-      {/* Day-of-week header */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', borderBottom: '1px solid #e5e7eb' }}>
+    <div className="flex-1 flex flex-col overflow-auto text-text">
+      <div className="grid grid-cols-7 border-b border-border">
         {DAY_HEADERS.map(d => (
-          <div key={d} style={{
-            padding: '8px 0',
-            textAlign: 'center',
-            fontSize: 12,
-            fontWeight: 600,
-            color: '#6b7280',
-          }}>
+          <div key={d} className="py-2 text-center text-[12px] font-semibold text-text-secondary">
             {d}
           </div>
         ))}
       </div>
 
-      {/* Weeks */}
-      <div style={{ flex: 1, display: 'grid', gridTemplateRows: `repeat(${weeks.length}, 1fr)` }}>
+      <div
+        className="flex-1 grid"
+        style={{ gridTemplateRows: `repeat(${weeks.length}, 1fr)` }}
+      >
         {weeks.map((week, wi) => (
-          <div key={wi} style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', borderBottom: '1px solid #f3f4f6' }}>
+          <div key={wi} className="grid grid-cols-7 border-b border-border">
             {week.map((date, di) => {
               const dateStr = date
                 ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
@@ -71,56 +67,29 @@ export function MonthView() {
                 <div
                   key={di}
                   onClick={() => date && handleDayClick(date)}
-                  style={{
-                    borderRight: di < 6 ? '1px solid #f3f4f6' : 'none',
-                    padding: '6px 8px',
-                    minHeight: 90,
-                    cursor: date ? 'pointer' : 'default',
-                    background: isSelected ? '#eff6ff' : 'transparent',
-                  }}
+                  className={`${di < 6 ? 'border-r border-border' : ''} p-1.5 min-h-22.5 ${date ? 'cursor-pointer' : 'cursor-default'} ${isSelected ? 'bg-tint' : ''}`}
                 >
                   {date && (
                     <>
-                      <div style={{
-                        width: 22,
-                        height: 22,
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 12,
-                        fontWeight: isToday ? 700 : 400,
-                        marginBottom: 4,
-                        background: isToday ? '#2563eb' : 'transparent',
-                        color: isToday ? '#fff' : isCurrentMonth ? '#111827' : '#d1d5db',
-                      }}>
+                      <div className={`w-5.5 h-5.5 rounded-full flex items-center justify-center text-[12px] mb-1 ${isToday ? 'bg-accent text-text-on-accent font-bold' : `font-normal ${isCurrentMonth ? 'text-text' : 'text-text-disabled'}`}`}>
                         {date.getDate()}
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                      <div className="flex flex-col gap-0.5">
                         {items.slice(0, 3).map(item => {
                           const act = activities.find(a => a.id === item.activityId);
                           if (!act) return null;
                           return (
                             <div
                               key={item.id}
-                              style={{
-                                background: act.color,
-                                borderRadius: 3,
-                                padding: '1px 5px',
-                                fontSize: 10,
-                                fontWeight: 600,
-                                color: '#000',
-                                overflow: 'hidden',
-                                whiteSpace: 'nowrap',
-                                textOverflow: 'ellipsis',
-                              }}
+                              className="rounded-sm py-px px-1.5 text-[10px] font-semibold truncate text-black"
+                              style={{ background: act.color }}
                             >
                               {act.name}
                             </div>
                           );
                         })}
                         {items.length > 3 && (
-                          <div style={{ fontSize: 10, color: '#6b7280' }}>+{items.length - 3} more</div>
+                          <div className="text-[10px] text-text-secondary">+{items.length - 3} more</div>
                         )}
                       </div>
                     </>

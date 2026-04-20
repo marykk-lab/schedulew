@@ -1,28 +1,59 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss";
+
+@theme {
+  /* ── Colors ──────────────────────────────────────────────────────────── */
+  --color-bg:               #161711;
+  --color-surface:          #45362c;
+  --color-accent:           #a8977a;
+  --color-accent-dark:      #7d6e57;
+  --color-toolbar:          #1a1710;
+  --color-card:             #2a1f17;
+  --color-input:            #1d1812;
+  --color-border:           rgba(168, 151, 122, 0.18);
+  --color-border-strong:    rgba(168, 151, 122, 0.35);
+  --color-overlay:          rgba(0, 0, 0, 0.60);
+  --color-tint:             rgba(168, 151, 122, 0.12);
+  --color-text:             #f0e8d6;
+  --color-text-secondary:   #8a7f6a;
+  --color-text-disabled:    #5e5548;
+  --color-text-on-accent:   #1a1710;
+  --color-success:          #5e8a52;
+  --color-success-bg:       rgba(94, 138, 82, 0.15);
+  --color-error:            #c75250;
+  --color-error-bg:         rgba(199, 82, 80, 0.15);
+  --color-warning:          #d0923a;
+  --color-danger:           #c75250;
+  --color-loading:          #a8977a;
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-display: 'Lora', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', 'Fira Code', monospace;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --shadow-sm:     0 1px 4px rgba(0,0,0,0.35);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:     0 8px 32px rgba(0,0,0,0.60);
+  --shadow-accent: 0 4px 20px rgba(168,151,122,0.25);
 }
 
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background-color: #161711;
+    color: #f0e8d6;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-

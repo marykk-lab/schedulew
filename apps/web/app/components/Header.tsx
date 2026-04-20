@@ -12,8 +12,7 @@ const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','
 
 function getMondayOfWeek(date: Date): Date {
   const d = new Date(date);
-  const day = d.getDay(); // 0=Sun
-  const diff = (day + 6) % 7;
+  const diff = (d.getDay() + 6) % 7;
   d.setDate(d.getDate() - diff);
   return d;
 }
@@ -40,71 +39,59 @@ const VIEW_MODES: { key: ViewMode; label: string }[] = [
   { key: 'month', label: 'Month' },
 ];
 
-export function Header() {
+interface Props {
+  onMenuClick: () => void;
+}
+
+export function Header({ onMenuClick }: Props) {
   const { viewMode, currentDate, setViewMode, goNext, goPrev } = useViewContext();
 
   return (
-    <header
-      style={{
-        height: 56,
-        borderBottom: '1px solid #e5e7eb',
-        background: '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 20px',
-        gap: 16,
-        flexShrink: 0,
-        color: '#111827',
-      }}
-    >
-      {/* Left: logo */}
-      <div style={{ width: 260, flexShrink: 0, display: 'flex', alignItems: 'center' }}>
-        <span style={{ fontSize: 18, fontWeight: 800, color: '#2563eb', letterSpacing: '-0.5px' }}>
-          Schedule<span style={{ color: '#111827' }}>W</span>
+    <header className="h-14 border-b border-border bg-toolbar flex items-center px-3 gap-2 shrink-0 md:border md:rounded-xl md:px-5 md:gap-4">
+      <button
+        onClick={onMenuClick}
+        className="md:hidden w-8 h-8 flex items-center justify-center rounded-md border border-border bg-card text-text-secondary cursor-pointer text-base hover:bg-surface transition-colors duration-150"
+        aria-label="Open menu"
+      >
+        ☰
+      </button>
+
+      <div className="hidden md:flex w-65 shrink-0 items-center">
+        <span className="text-[18px] font-extrabold text-accent tracking-tight">
+          Schedule<span className="text-text">W</span>
         </span>
       </div>
 
-      {/* Middle: navigation */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+      <div className="flex-1 flex items-center justify-center gap-2 md:gap-3">
         <button
           onClick={goPrev}
-          style={navBtnStyle}
+          className="w-7 h-7 border border-border rounded-md bg-card cursor-pointer text-[18px] leading-none flex items-center justify-center text-text-secondary transition-colors duration-150 hover:bg-surface"
           aria-label="Previous"
         >
           ‹
         </button>
-
-        <span style={{ fontSize: 14, fontWeight: 600, color: '#111827', minWidth: 200, textAlign: 'center' }}>
+        <span className="text-[13px] md:text-[14px] font-semibold text-text min-w-35 md:min-w-50 text-center">
           {formatDateRange(currentDate, viewMode)}
         </span>
-
         <button
           onClick={goNext}
-          style={navBtnStyle}
+          className="w-7 h-7 border border-border rounded-md bg-card cursor-pointer text-[18px] leading-none flex items-center justify-center text-text-secondary transition-colors duration-150 hover:bg-surface"
           aria-label="Next"
         >
           ›
         </button>
       </div>
 
-      {/* Right: view mode toggle */}
-      <div style={{ display: 'flex', gap: 2, background: '#f3f4f6', borderRadius: 8, padding: 3 }}>
+      <div className="flex gap-0.5 bg-surface rounded-lg p-0.75">
         {VIEW_MODES.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setViewMode(key)}
-            style={{
-              padding: '5px 14px',
-              borderRadius: 6,
-              border: 'none',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: 'pointer',
-              background: viewMode === key ? '#ffffff' : 'transparent',
-              color: viewMode === key ? '#111827' : '#6b7280',
-              boxShadow: viewMode === key ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-              transition: 'all 0.15s',
-            }}
+            className={`px-2.5 md:px-3.5 py-1.5 rounded-md border-0 text-[12px] md:text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
+              viewMode === key
+                ? 'bg-card text-text shadow-sm'
+                : 'bg-transparent text-text-secondary'
+            }`}
           >
             {label}
           </button>
@@ -113,18 +100,3 @@ export function Header() {
     </header>
   );
 }
-
-const navBtnStyle: React.CSSProperties = {
-  width: 28,
-  height: 28,
-  border: '1px solid #e5e7eb',
-  borderRadius: 6,
-  background: '#fff',
-  cursor: 'pointer',
-  fontSize: 18,
-  lineHeight: 1,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#374151',
-};

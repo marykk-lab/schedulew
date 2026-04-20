@@ -15,35 +15,20 @@ export function DraggableActivity({ activity }: Props) {
     data: { activity },
   });
 
-  const style: React.CSSProperties = {
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.4 : 1,
-    cursor: 'grab',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
-    padding: '6px 10px',
-    borderRadius: 6,
-    background: '#f9fafb',
-    border: '1px solid #e5e7eb',
-    userSelect: 'none',
-    touchAction: 'none',
-    color: '#111827',
-  };
-
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div
+      ref={setNodeRef}
+      className="cursor-grab flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-card border border-border select-none touch-none text-text"
+      style={{ transform: CSS.Translate.toString(transform), opacity: isDragging ? 0.4 : 1 }}
+      {...listeners}
+      {...attributes}
+    >
       <span
-        style={{
-          width: 12,
-          height: 12,
-          borderRadius: '50%',
-          background: activity.color,
-          flexShrink: 0,
-        }}
+        className="w-3 h-3 rounded-full shrink-0"
+        style={{ background: activity.color }}
       />
-      <span style={{ fontSize: 14, fontWeight: 500, color: '#111827' }}>{activity.name}</span>
-      <span style={{ fontSize: 12, color: '#6b7280', marginLeft: 'auto' }}>{activity.duration}m</span>
+      <span className="text-sm font-medium text-text">{activity.name}</span>
+      <span className="text-[12px] text-text-secondary ml-auto">{activity.duration}m</span>
     </div>
   );
 }

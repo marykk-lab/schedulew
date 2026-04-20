@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useScheduleContext } from '../../store/scheduleStore';
 import { DayOfWeek } from '../../types/types';
 
@@ -41,76 +40,33 @@ export function ActivityModal({ onClose }: Props) {
     onClose();
   }
 
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    padding: '7px 10px',
-    borderRadius: 6,
-    border: '1px solid #d1d5db',
-    fontSize: 13,
-    color: '#111827',
-    background: '#fff',
-    outline: 'none',
-  };
-
-  const labelStyle: React.CSSProperties = {
-    fontSize: 12,
-    fontWeight: 600,
-    color: '#374151',
-    marginBottom: 4,
-    display: 'block',
-  };
+  const inputCls = 'w-full px-3.5 py-2.5 rounded-lg border border-border text-[13px] text-text bg-input outline-none';
+  const labelCls = 'text-[12px] font-semibold text-text-secondary mb-1.5 block';
 
   return (
     <div
+      className="fixed inset-0 bg-overlay flex flex-col justify-end md:items-center md:justify-center z-300"
       onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.4)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000,
-      }}
     >
       <div
+        className="bg-surface rounded-t-2xl md:rounded-2xl p-8 w-full md:w-96 shadow-lg text-text"
         onClick={e => e.stopPropagation()}
-        style={{
-          background: '#fff',
-          borderRadius: 12,
-          padding: 24,
-          width: 360,
-          boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
-          color: '#111827',
-        }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: 0 }}>New activity</h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-base font-bold text-text m-0">New activity</h2>
           <button
             onClick={onClose}
-            style={{
-              border: 'none',
-              background: '#f3f4f6',
-              cursor: 'pointer',
-              borderRadius: 6,
-              fontSize: 14,
-              color: '#6b7280',
-              width: 28,
-              height: 28,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            className="border-0 bg-card cursor-pointer rounded-md text-sm text-text-secondary w-7 h-7 flex items-center justify-center hover:text-text transition-colors duration-150"
           >
             ✕
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
-            <label style={labelStyle}>Name</label>
+            <label className={labelCls}>Name</label>
             <input
-              style={inputStyle}
+              className={inputCls}
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
@@ -120,11 +76,11 @@ export function ActivityModal({ onClose }: Props) {
             />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="grid grid-cols-2 gap-3">
             <div>
-              <label style={labelStyle}>Duration (min)</label>
+              <label className={labelCls}>Duration (min)</label>
               <input
-                style={inputStyle}
+                className={inputCls}
                 type="number"
                 value={duration}
                 min={5}
@@ -133,23 +89,23 @@ export function ActivityModal({ onClose }: Props) {
               />
             </div>
             <div>
-              <label style={labelStyle}>Color</label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <label className={labelCls}>Color</label>
+              <div className="flex items-center gap-2">
                 <input
                   type="color"
                   value={color}
                   onChange={e => setColor(e.target.value)}
-                  style={{ width: 36, height: 36, border: 'none', borderRadius: 6, cursor: 'pointer', padding: 2 }}
+                  className="w-9 h-9 border-0 rounded-md cursor-pointer p-0.5 bg-transparent"
                 />
-                <span style={{ fontSize: 12, color: '#6b7280' }}>{color}</span>
+                <span className="text-[12px] text-text-secondary">{color}</span>
               </div>
             </div>
           </div>
 
           <div>
-            <label style={labelStyle}>Preferred day</label>
+            <label className={labelCls}>Preferred day</label>
             <select
-              style={inputStyle}
+              className={inputCls}
               value={preferredDay}
               onChange={e => setPreferredDay(e.target.value as DayOfWeek | '')}
             >
@@ -159,9 +115,9 @@ export function ActivityModal({ onClose }: Props) {
           </div>
 
           <div>
-            <label style={labelStyle}>Preferred time</label>
+            <label className={labelCls}>Preferred time</label>
             <select
-              style={inputStyle}
+              className={inputCls}
               value={preferredTime}
               onChange={e => setPreferredTime(e.target.value as 'a.m.' | 'p.m.' | '')}
             >
@@ -171,37 +127,17 @@ export function ActivityModal({ onClose }: Props) {
             </select>
           </div>
 
-          <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+          <div className="flex gap-3 mt-2">
             <button
               type="button"
               onClick={onClose}
-              style={{
-                flex: 1,
-                padding: '9px 0',
-                borderRadius: 8,
-                border: '1px solid #d1d5db',
-                background: '#fff',
-                color: '#374151',
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
+              className="flex-1 py-3 rounded-xl border border-border bg-card text-text-secondary text-[13px] font-semibold cursor-pointer hover:bg-surface transition-colors duration-150"
             >
               Cancel
             </button>
             <button
               type="submit"
-              style={{
-                flex: 1,
-                padding: '9px 0',
-                borderRadius: 8,
-                border: 'none',
-                background: '#2563eb',
-                color: '#fff',
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
+              className="flex-1 py-3 rounded-xl border-0 bg-accent text-text-on-accent text-[13px] font-semibold cursor-pointer hover:bg-accent-dark transition-colors duration-150"
             >
               Add
             </button>

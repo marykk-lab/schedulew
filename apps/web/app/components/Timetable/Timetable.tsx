@@ -44,7 +44,7 @@ export function Timetable() {
     : visibleDays;
 
   return (
-    <div style={{ display: 'flex', overflow: 'auto', flex: 1 }}>
+    <div className="flex overflow-auto flex-1">
       <TimeColumn />
       {dayColumns.map(({ day, date }) => (
         <DayColumn key={day} day={day} date={date} />
