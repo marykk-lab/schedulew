@@ -50,7 +50,8 @@ export function Header({ onMenuClick }: Props) {
     <header className="h-14 border-b border-border bg-toolbar flex items-center px-3 gap-2 shrink-0 md:border md:rounded-xl md:px-5 md:gap-4">
       <button
         onClick={onMenuClick}
-        className="md:hidden w-8 h-8 flex items-center justify-center rounded-md border border-border bg-card text-text-secondary cursor-pointer text-base hover:bg-surface transition-colors duration-150"
+        className="md:hidden flex items-center justify-center rounded-md border border-border bg-card text-text-secondary cursor-pointer hover:bg-surface transition-colors duration-150"
+        style={{ width: 44, height: 44, fontSize: 20 }}
         aria-label="Open menu"
       >
         ☰
@@ -70,7 +71,7 @@ export function Header({ onMenuClick }: Props) {
         >
           ‹
         </button>
-        <span className="text-[13px] md:text-[14px] font-semibold text-text min-w-35 md:min-w-50 text-center">
+        <span className="text-[13px] md:text-[14px] font-semibold text-text md:min-w-50 text-center whitespace-nowrap">
           {formatDateRange(currentDate, viewMode)}
         </span>
         <button
@@ -87,7 +88,7 @@ export function Header({ onMenuClick }: Props) {
           <button
             key={key}
             onClick={() => setViewMode(key)}
-            className={`px-2.5 md:px-3.5 py-1.5 rounded-md border-0 text-[12px] md:text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
+            className={`px-1.5 md:px-3.5 py-1.5 rounded-md border-0 text-[12px] md:text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
               viewMode === key
                 ? 'bg-card text-text shadow-sm'
                 : 'bg-transparent text-text-secondary'
