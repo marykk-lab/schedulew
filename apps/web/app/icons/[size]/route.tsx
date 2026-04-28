@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-
+import React from 'react';
 export const runtime = 'edge';
 
 export function GET(_req: Request, { params }: { params: { size: string } }) {
