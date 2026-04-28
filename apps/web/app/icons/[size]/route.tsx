@@ -1,9 +1,15 @@
 import { ImageResponse } from 'next/og';
 import React from 'react';
+
 export const runtime = 'edge';
 
-export function GET(_req: Request, { params }: { params: { size: string } }) {
-  const size = Number(params.size) || 192;
+export async function GET(
+  _req: Request, 
+  { params }: { params: Promise<{ size: string }> }
+) {
+  const { size: rawSize } = await params;
+  
+  const size = Number(rawSize) || 192;
   const radius = Math.round(size * 0.18);
 
   return new ImageResponse(
